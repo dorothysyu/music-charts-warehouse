@@ -1,0 +1,8 @@
+.idea/
+.vscode/
+__pycache__/
+dummy_spotify_data.csv
+model.mwb.bak
+.venv/
+chartsconfig.ini
+testchartsconfig.ini
