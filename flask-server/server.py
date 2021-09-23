@@ -14,7 +14,7 @@ def index():
     data = charts.table_from_curweek()
     df = DataFrame(data, columns=['Chart Name', 'Chart Week', 'Title', 'Artist', 'Song ID', 'Position', 'Streams',
                                   'Weeks on Chart', 'Peak Position', 'Last Position'])
-    return df.to_json()
+    return df.to_json(orient='records')
 
 
 @app.route('/tables')
