@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import Button from './Checkbox'
+import Checkbox from './Checkbox'
 
 const Header = ({ title }) => {
 
@@ -11,8 +11,8 @@ const Header = ({ title }) => {
     return (
         <header className='header'>
             <h1>{title}</h1>
-            <Button color='#95A5A6' text='Spotify' onClick={onClick} />
-            <Button color='#95A5A6' text='Billboard' onClick={onClick} />
+            <Checkbox color='#95A5A6' text='Spotify' onClick={onClick} />
+            <Checkbox color='#95A5A6' text='Billboard' onClick={onClick} />
         </header>
     )
 }

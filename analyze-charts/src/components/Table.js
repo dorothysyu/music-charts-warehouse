@@ -1,5 +1,5 @@
 /*Thank u to https://blog.logrocket.com/building-styling-tables-react-table-v7/ */
-import { useTable } from "react-table";
+import { useTable, useSortBy, useFilters } from "react-table";
 
 const Table = ({ columns, data }) => {
     const {
@@ -11,26 +11,45 @@ const Table = ({ columns, data }) => {
     } = useTable({
         columns,
         data
-    });
+    },
+        useFilters,
+        useSortBy);
 
     return (
         <table {...getTableProps()}>
             <thead>
                 {headerGroups.map(headerGroup => (
-                    <tr style={{ backgroundColor: "#ecf0f1" }} {...headerGroup.getHeaderGroupProps()}>
+                    <tr
+                        className='table-header'
+                        {...headerGroup.getHeaderGroupProps()}>
                         {headerGroup.headers.map(column => (
-                            <th {...column.getHeaderProps()}>{column.render("Header")}</th>
+                            <th
+                                className='columnTitleCell'
+                                {...column.getHeaderProps(column.getSortByToggleProps())}>
+                                {column.render("Header")}
+                                {/* Add sorting indicator. */}
+                                <span>
+                                    {column.isSorted
+                                        ? column.isSortedDesc ? '▼' : '▲'
+                                        : ''}
+                                </span>
+                            </th>
                         ))}
                     </tr>
                 ))}
             </thead>
-            <tbody {...getTableBodyProps()}>
+            <tbody className='tableBody'
+                {...getTableBodyProps()}>
                 {rows.map((row, i) => {
                     prepareRow(row);
                     return (
-                        <tr {...row.getRowProps()}>
+                        <tr
+                            className='track-row'
+                            {...row.getRowProps()}>
                             {row.cells.map(cell => {
-                                return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
+                                return <td
+                                    className='track-cell'
+                                    {...cell.getCellProps()}>{cell.render("Cell")}</td>;
                             })}
                         </tr>
                     );
