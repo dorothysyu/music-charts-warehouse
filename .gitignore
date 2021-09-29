@@ -1,0 +1,6 @@
+flask-server/.idea/
+flask-server/.vscode/
+flask-server/__pycache__/
+.venv/
+flask-server/chartsconfig.ini
+flask-server/testchartsconfig.ini
