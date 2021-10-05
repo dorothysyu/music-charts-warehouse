@@ -3,6 +3,7 @@ import './index.css'
 import Header from './components/Header'
 import Table from './components/Table'
 import data from './data'
+import { format } from 'date-fns'
 
 function App() {
   /* Ensures that data isn't recreated on every render. */
@@ -12,14 +13,15 @@ function App() {
 
   const columns = React.useMemo(
     () => [
-      // {
-      //   Header: "Chart Name",
-      //   accessor: "Chart Name",
-      //   sortType: 'basic'
-      // },
+      {
+        Header: "Chart Name",
+        accessor: "Chart Name",
+        isVisible: false
+      },
       {
         Header: "Chart Week",
-        accessor: "Chart Week"
+        accessor: "Chart Week",
+        Cell: ({ value }) => { return format(new Date(value), 'MMM d, Y') }
       },
       {
         Header: "Position",
@@ -27,37 +29,31 @@ function App() {
       },
       {
         Header: "Title",
-        accessor: "Title",
-        sortType: 'basic'
+        accessor: "Title"
       },
       {
         Header: "Artist",
-        accessor: "Artist",
-        sortType: 'basic'
+        accessor: "Artist"
       },
-      // {
-      //   Header: "Song ID",
-      //   accessor: "Song ID"
-      // },
+      {
+        Header: "Song ID",
+        accessor: "Song ID"
+      },
       {
         Header: "Streams",
-        accessor: "Streams",
-        sortType: 'basic'
+        accessor: "Streams"
       },
       {
         Header: "Weeks on Chart",
-        accessor: "Weeks on Chart",
-        sortType: 'basic'
+        accessor: "Weeks on Chart"
       },
       {
         Header: "Peak Position",
-        accessor: "Peak Position",
-        sortType: 'basic'
+        accessor: "Peak Position"
       },
       {
         Header: "Last Position",
-        accessor: "Last Position",
-        sortType: 'basic'
+        accessor: "Last Position"
       },
     ],
     []
