@@ -25,7 +25,8 @@ function App() {
       },
       {
         Header: "Position",
-        accessor: "Position"
+        accessor: "Position",
+        className: "number"
       },
       {
         Header: "Title",
@@ -41,19 +42,39 @@ function App() {
       },
       {
         Header: "Streams",
-        accessor: "Streams"
+        accessor: "Streams",
+        className: "track-cell number",
+        Cell: ({ value }) => {
+          const disp = value > 0 ? value.toLocaleString() : '-'
+          return disp
+        }
       },
       {
         Header: "Weeks on Chart",
-        accessor: "Weeks on Chart"
+        accessor: "Weeks on Chart",
+        className: "number",
+        Cell: ({ value }) => {
+          const disp = value > 0 ? value : '-'
+          return disp
+        }
       },
       {
         Header: "Peak Position",
-        accessor: "Peak Position"
+        accessor: "Peak Position",
+        className: "number",
+        Cell: ({ value }) => {
+          const disp = value > 0 ? value : '-'
+          return disp
+        }
       },
       {
         Header: "Last Position",
-        accessor: "Last Position"
+        accessor: "Last Position",
+        className: "number",
+        Cell: ({ value }) => {
+          const disp = value > 0 ? value : '-'
+          return disp
+        }
       },
     ],
     []

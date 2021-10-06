@@ -20,7 +20,6 @@ const Table = ({ columns, data }) => {
             <thead>
                 {headerGroups.map(headerGroup => (
                     <tr
-                        className='table-header'
                         {...headerGroup.getHeaderGroupProps()}>
                         {headerGroup.headers.map(column => (
                             <th
@@ -38,18 +37,18 @@ const Table = ({ columns, data }) => {
                     </tr>
                 ))}
             </thead>
-            <tbody className='tableBody'
+            <tbody className='chart-table'
                 {...getTableBodyProps()}>
                 {rows.map((row, i) => {
                     prepareRow(row);
                     return (
                         <tr
-                            className='track-row'
                             {...row.getRowProps()}>
                             {row.cells.map(cell => {
                                 return <td
-                                    className='track-cell'
-                                    {...cell.getCellProps()}>{cell.render("Cell")}</td>;
+                                    {...cell.getCellProps([{
+                                        className: cell.column.className
+                                    }])}>{cell.render("Cell")}</td>;
                             })}
                         </tr>
                     );

@@ -18,10 +18,9 @@ body {
   border:#fff;
   margin: 30px auto;
   overflow: auto;
-  /* min-height: 300px; */
   height: 90%;
   width: 60%;
-  padding: 30px;
+  padding: 0px;
   border: thin solid #f7d794;
   border-radius:20px
 }
@@ -29,7 +28,7 @@ body {
 .header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: left;
   margin-bottom: 20px;
 }
 
@@ -38,22 +37,31 @@ body {
   clear:both;
 }
 
-
-.table-header {
-  text-align:left;
-  border: thick dashed white;
+table {
+  border-collapse: collapse;
 }
 
-.tableBody {
+table thead {
+  text-align:left;
+  align-items: left;
+}
+
+table thead.number{
+  text-align: center;
+}
+
+table tbody {
   margin:100px;
   padding:100px;
-  border: thick solid salmon;
 }
 
-.track-row{
-  text-align:left;
-  background-color: ;
-  border: thick solid ;
+table td{
+  text-align: left;
+  border-bottom: thin solid white;
+}
+
+table td.number{
+  text-align: center;
 }
 
 .track-cell{
@@ -61,6 +69,7 @@ body {
   padding-top: 2%;
   padding-bottom: 2%;
   border-bottom: thin solid white;
+  border-spacing:0;
 }
 
 .btn {
@@ -76,6 +85,7 @@ body {
   font-size: 15px;
   font-family: inherit;
 }
+
 
 .btn:focus {
   outline: none;
