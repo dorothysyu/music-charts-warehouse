@@ -12,7 +12,6 @@ def read_db_config(filename, section='mysql'):
     # create parser and read ini configuration file
     parser = ConfigParser()
     parser.read(filename)
-    # parser.read(os.path.join(os.path.dirname(__file__), filename))
 
     # get section, default to mysql
     db = {}

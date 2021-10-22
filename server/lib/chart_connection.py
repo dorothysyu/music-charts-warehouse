@@ -17,10 +17,10 @@ class ChartsConnection:
 
     def connect(self):
         """ Connect to MySQL database """
-        # if self.is_test:
-        #     db_config = read_db_config('./testchartsconfig.ini')
-        # else:
-        #     db_config = read_db_config('chartsconfig.ini')
+        if self.is_test:
+            db_config = read_db_config('server/tests/testchartsconfig.ini')
+        else:
+            db_config = read_db_config('server/lib/chartsconfig.ini')
         try:
             print('Connecting to MySQL database...')
             self.cnx = pymysql.Connection(**db_config)

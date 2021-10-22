@@ -1,7 +1,7 @@
-import chart_connection as cc
+from chart_connection import ChartsConnection
 
 if __name__ == "__main__":
-    charts = cc.ChartsConnection()
+    charts = ChartsConnection()
     menu = {'0': 'View all charts.',
             '1': "Search for songs by title.",
             '2': "Search for songs by artist.",
