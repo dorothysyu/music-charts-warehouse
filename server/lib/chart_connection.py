@@ -3,6 +3,7 @@ import scrape_billboard
 import scrape_spotify
 import csv
 import re
+from fuzzywuzzy import process
 from python_sql_dbconfig import read_db_config
 
 
@@ -16,10 +17,10 @@ class ChartsConnection:
 
     def connect(self):
         """ Connect to MySQL database """
-        if self.is_test:
-            db_config = read_db_config('testchartsconfig.ini')
-        else:
-            db_config = read_db_config('./chartsconfig.ini')
+        # if self.is_test:
+        #     db_config = read_db_config('./testchartsconfig.ini')
+        # else:
+        #     db_config = read_db_config('chartsconfig.ini')
         try:
             print('Connecting to MySQL database...')
             self.cnx = pymysql.Connection(**db_config)
@@ -147,6 +148,18 @@ class ChartsConnection:
         cur.close()
         return found_same
 
+    def fuzzy_is_same_song(self, str1, str2):
+        str1 = "4 Da Gang 42 Dugg & Roddy Ricch"
+        str1 = "4 Da Gang (with Roddy Ricch) 42 Dugg"
+        Ratio = fuzz.ratio(Str1.lower(), Str2.lower())
+        Partial_Ratio = fuzz.partial_ratio(Str1.lower(), Str2.lower())
+        Token_Sort_Ratio = fuzz.token_sort_ratio(Str1, Str2)
+        Token_Set_Ratio = fuzz.token_set_ratio(Str1, Str2)
+        print(Ratio)
+        print(Partial_Ratio)
+        print(Token_Sort_Ratio)
+        print(Token_Set_Ratio)
+
     def create_song_entry(self, title, artist):
         cur = self.cnx.cursor()
         cur.execute('SELECT title, artist from songs')
@@ -188,7 +201,7 @@ class ChartsConnection:
         if not self.is_test:
             scrape_spotify.spotify_to_csv()
             cur = self.cnx.cursor()
-            with open('./music-data/spotify.csv', mode='r') as csv_file:
+            with open('server/music_data/billboard.csv', mode='r') as csv_file:
                 csv_reader = csv.DictReader(csv_file)
                 line_count = 0
                 for row in csv_reader:
@@ -205,7 +218,7 @@ class ChartsConnection:
         if not self.is_test:
             scrape_billboard.billboard_to_csv()
             cur = self.cnx.cursor()
-            with open('./music-data/billboard.csv', mode='r') as csv_file:
+            with open('server/music_data/billboard.csv', mode='r') as csv_file:
                 csv_reader = csv.DictReader(csv_file)
                 line_count = 0
                 for row in csv_reader:

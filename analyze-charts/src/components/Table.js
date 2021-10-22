@@ -10,51 +10,42 @@ const Table = ({ columns, data }) => {
         prepareRow
     } = useTable({
         columns,
-        data
+        data,
+        initialState: {
+            hiddenColumns: columns.map(column => {
+                if (column.show == false) return column.accessor || column.id;
+            }),
+        }
     },
         useFilters,
         useSortBy);
 
-    return (
-        <table {...getTableProps()}>
-            <thead>
-                {headerGroups.map(headerGroup => (
-                    <tr
-                        {...headerGroup.getHeaderGroupProps()}>
-                        {headerGroup.headers.map(column => (
-                            <th
-                                className='columnTitleCell'
-                                {...column.getHeaderProps(column.getSortByToggleProps())}>
-                                {column.render("Header")}
-                                {/* Add sorting indicator. */}
-                                <span>
-                                    {column.isSorted
-                                        ? column.isSortedDesc ? '▼' : '▲'
-                                        : ''}
-                                </span>
-                            </th>
-                        ))}
-                    </tr>
-                ))}
-            </thead>
-            <tbody className='chart-table'
-                {...getTableBodyProps()}>
-                {rows.map((row, i) => {
-                    prepareRow(row);
-                    return (
-                        <tr
-                            {...row.getRowProps()}>
-                            {row.cells.map(cell => {
-                                return <td
-                                    {...cell.getCellProps([{
-                                        className: cell.column.className
-                                    }])}>{cell.render("Cell")}</td>;
-                            })}
-                        </tr>
-                    );
-                })}
-            </tbody>
-        </table>
+    return (<table {...getTableProps()} >
+        <thead > {
+            headerGroups.map(headerGroup => (<tr {...headerGroup.getHeaderGroupProps()} > {
+                headerGroup.headers.map(column => (< th {...column.getHeaderProps(column.getSortByToggleProps())} > {column.render("Header")} { /* Add sorting indicator. */} <
+                    span > {
+                        column.isSorted ?
+                            column.isSortedDesc ? '▼' : '▲' : ''
+                    } </span> </th >
+                ))
+            } </tr>
+            ))
+        } </thead>
+        <tbody className='chart-table' {...getTableBodyProps()} > {
+            rows.map((row, i) => {
+                prepareRow(row);
+                return (<tr {...row.getRowProps()} > {
+                    row.cells.map(cell => {
+                        return <td {...cell.getCellProps([{
+                            className: cell.column.className
+                        }])
+                        } > {cell.render("Cell")} </td>;
+                    })
+                } </tr>
+                );
+            })
+        } </tbody> </table >
     );
 };
 

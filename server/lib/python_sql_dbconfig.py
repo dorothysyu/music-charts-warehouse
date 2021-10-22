@@ -1,5 +1,6 @@
 """All of this code straight up taken from https://www.mysqltutorial.org/python-connecting-mysql-databases/"""
 from configparser import ConfigParser
+import os
 
 
 def read_db_config(filename, section='mysql'):
@@ -11,6 +12,7 @@ def read_db_config(filename, section='mysql'):
     # create parser and read ini configuration file
     parser = ConfigParser()
     parser.read(filename)
+    # parser.read(os.path.join(os.path.dirname(__file__), filename))
 
     # get section, default to mysql
     db = {}
@@ -21,6 +23,7 @@ def read_db_config(filename, section='mysql'):
         for item in items:
             db[item[0]] = item[1]
     else:
-        raise Exception('{0} not found in the {1} file'.format(section, filename))
+        raise Exception(
+            '{0} not found in the {1} file'.format(section, filename))
 
     return db
