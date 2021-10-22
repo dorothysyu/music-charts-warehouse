@@ -40,7 +40,7 @@ def spotify_to_csv():
                           "Chart Week", "Position", "Artist", "Title", "Streams"])
     df["Chart Week"] = pandas.to_datetime(df["Chart Week"], format="%m/%d/%Y")
     df["Chart Week"] = df["Chart Week"].dt.strftime('%Y-%m-%d')
-    with open('server/music_data/spotify.csv', 'w') as f:
+    with open('music_data/spotify.csv', 'w') as f:
         df.to_csv(f, header=True, index=False)
 
 

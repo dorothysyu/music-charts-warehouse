@@ -18,9 +18,9 @@ class ChartsConnection:
     def connect(self):
         """ Connect to MySQL database """
         if self.is_test:
-            db_config = read_db_config('server/tests/testchartsconfig.ini')
+            db_config = read_db_config('tests/testchartsconfig.ini')
         else:
-            db_config = read_db_config('server/lib/chartsconfig.ini')
+            db_config = read_db_config('lib/chartsconfig.ini')
         try:
             print('Connecting to MySQL database...')
             self.cnx = pymysql.Connection(**db_config)
@@ -201,7 +201,7 @@ class ChartsConnection:
         if not self.is_test:
             scrape_spotify.spotify_to_csv()
             cur = self.cnx.cursor()
-            with open('server/music_data/billboard.csv', mode='r') as csv_file:
+            with open('music_data/billboard.csv', mode='r') as csv_file:
                 csv_reader = csv.DictReader(csv_file)
                 line_count = 0
                 for row in csv_reader:
@@ -218,7 +218,7 @@ class ChartsConnection:
         if not self.is_test:
             scrape_billboard.billboard_to_csv()
             cur = self.cnx.cursor()
-            with open('server/music_data/billboard.csv', mode='r') as csv_file:
+            with open('music_data/billboard.csv', mode='r') as csv_file:
                 csv_reader = csv.DictReader(csv_file)
                 line_count = 0
                 for row in csv_reader:
