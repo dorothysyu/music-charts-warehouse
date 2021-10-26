@@ -1,5 +1,5 @@
 import unittest
-from server.lib.chart_connection import ChartsConnection
+from charts_app.server.lib.chart_connection import ChartsConnection
 
 
 class TestIsSameSong(unittest.TestCase):

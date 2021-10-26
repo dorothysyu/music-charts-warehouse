@@ -11,7 +11,7 @@
             "program": "test_charts_connection.py",
             "console": "integratedTerminal",
             "cwd": "${workspaceFolder}/server/tests",
-            "envFile": "${workspaceFolder}/server/.venv",
+            "envFile": "${workspaceFolder}/.venv",
             "justMyCode": false /*debug purpose so frame won't be skipped during step in*/
         }
     ]

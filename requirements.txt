@@ -1,15 +1,17 @@
 autopep8==1.5.7
-beautifulsoup4==4.10.0   
+beautifulsoup4==4.10.0
 bs4==0.0.1
-certifi==2021.5.30       
+certifi==2021.5.30
 cfscrape==2.1.1
 charset-normalizer==2.0.6
-click==8.0.1
+-e git+https://github.com/dorothysyu/music-charts-warehouse@dfb640450ef4e7a97436d5fd7ad5521f3b9d229d#egg=charts_app
+click==8.0.3
 colorama==0.4.4
 dominate==2.6.0
 Flask==2.0.1
 Flask-Bootstrap==3.3.7.1
-idna==3.2
+fuzzywuzzy==0.18.0
+idna==3.3
 importlib-metadata==4.8.1
 itsdangerous==2.0.1
 Jinja2==3.0.1
