@@ -1,0 +1,5 @@
+.idea/
+server/.venv/
+**/__pycache__/
+**/chartsconfig.ini
+**/testchartsconfig.ini

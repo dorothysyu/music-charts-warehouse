@@ -1,0 +1,5 @@
+setup.py
+charts_app.egg-info/PKG-INFO
+charts_app.egg-info/SOURCES.txt
+charts_app.egg-info/dependency_links.txt
+charts_app.egg-info/top_level.txt
