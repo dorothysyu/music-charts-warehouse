@@ -1,4 +1,4 @@
-# Web scrapes the content of the Spotify's Top 200 songs in the US in the past week.
+# Web scrapes the content of the Billboard's Top 200 songs in the US in the past week.
 # Used these sites to help me write this code:
 # https://www.freecodecamp.org/news/web-scraping-python-tutorial-how-to-scrape-data-from-a-website/
 # https://medium.com/the-innovation/how-to-scrape-the-most-popular-songs-on-spotify-using-python-8a8979fa6b06
@@ -14,28 +14,30 @@ billboard_page = requests.get(billboard_url)
 billboard_soup = BeautifulSoup(billboard_page.content, 'html.parser')
 
 # Gets the contents of the chart.
-songs = billboard_soup.find("ol", class_="chart-list__elements")
+songs = billboard_soup.find(class_="chart-results-list")
 # Creates an empty list containing all chart entries.
 billboard_chart_entries = []
 
 
 # Scrapes information for each track.
 def scrape_song():
-    chart_week = billboard_soup.find(
-        "button", class_="date-selector__button").text.strip()
-    for track in songs.find_all("button", class_="chart-element__wrapper"):
-        position = track.find(
-            "span", class_="chart-element__rank__number").text
-        artist = track.find(
-            "span", class_="chart-element__information__artist").text
-        title = track.find(
-            "span", class_="chart-element__information__song").text
-        weeks_on_chart = track.find(
-            class_="chart-element__meta text--center color--secondary text--week").text
-        peak_pos = track.find(
-            class_="chart-element__meta text--center color--secondary text--peak").text
-        last_pos = track.find(
-            class_="chart-element__meta text--center color--secondary text--last").text
+    chart_week = billboard_soup.find_all(
+        "h2", id="section-heading")[0].text.replace("Week of ", "").strip()
+    for track in songs.find_all("ul", class_="o-chart-results-list-row"):
+        track_elements = track.find_all(
+            "li", class_="o-chart-results-list__item")
+        position = track_elements[0].find(
+            "span", class_="c-label").text.strip()  # finding the chart position
+        artist = track_elements[3].find(
+            "span", class_="c-label").text.strip()  # find the artist
+        title = track_elements[3].find(
+            "h3", class_="c-title").text.strip()  # find the song title
+        weeks_on_chart = track_elements[8].find(
+            "span", class_="c-label").text.strip()
+        peak_pos = track_elements[7].find(
+            "span", class_="c-label").text.strip()
+        last_pos = track_elements[6].find(
+            "span", class_="c-label").text.strip()
         last_pos = last_pos.replace("-", "NULL").strip()
         billboard_chart_entries.append(
             [chart_week, position, artist, title, weeks_on_chart, peak_pos, last_pos])
