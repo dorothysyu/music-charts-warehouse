@@ -7,13 +7,13 @@ const Table = ({ columns, data }) => {
         getTableBodyProps,
         headerGroups,
         rows,
-        prepareRow
+        prepareRow,
     } = useTable({
         columns,
         data,
         initialState: {
             hiddenColumns: columns.map(column => {
-                if (column.show == false) return column.accessor || column.id;
+                if (column.show === false) return column.accessor || column.id;
             }),
         }
     },
@@ -22,30 +22,37 @@ const Table = ({ columns, data }) => {
 
     return (<table {...getTableProps()} >
         <thead > {
-            headerGroups.map(headerGroup => (<tr {...headerGroup.getHeaderGroupProps()} > {
-                headerGroup.headers.map(column => (< th {...column.getHeaderProps(column.getSortByToggleProps())} > {column.render("Header")} { /* Add sorting indicator. */} <
-                    span > {
-                        column.isSorted ?
-                            column.isSortedDesc ? '▼' : '▲' : ''
-                    } </span> </th >
-                ))
-            } </tr>
+            headerGroups.map(headerGroup => (
+                <tr {...headerGroup.getHeaderGroupProps()} > {
+                    headerGroup.headers.map(column => (
+                        <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                            {column.render("Header")}
+                            { /* Add sorting indicator. */}
+                            <span>
+                                {column.isSorted ? column.isSortedDesc ? '▼' : '▲' : ''}
+                            </span>
+                            <div>
+                                {column.canFilter ? column.render("Filter") : null}
+                            </div>
+                        </th >
+                    ))
+                } </tr>
             ))
         } </thead>
         <tbody className='chart-table' {...getTableBodyProps()} > {
             rows.map((row, i) => {
                 prepareRow(row);
-                return (<tr {...row.getRowProps()} > {
-                    row.cells.map(cell => {
-                        return <td {...cell.getCellProps([{
-                            className: cell.column.className
-                        }])
-                        } > {cell.render("Cell")} </td>;
-                    })
-                } </tr>
+                return (
+                    <tr
+                        {...row.getRowProps()} > {row.cells.map(cell => {
+                            return <td {...cell.getCellProps([{ className: cell.column.className }])} > {cell.render("Cell")}
+                            </td>;
+                        })
+                        } </tr>
                 );
             })
-        } </tbody> </table >
+        } </tbody>
+    </table >
     );
 };
 
