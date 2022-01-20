@@ -49,7 +49,7 @@ def billboard_to_csv():
                                                             "Weeks on Chart", "Peak Position", "Last Position"])
     df["Chart Week"] = pandas.to_datetime(df["Chart Week"], format='%B %d, %Y')
     df["Chart Week"] = df["Chart Week"].dt.strftime('%Y-%m-%d')
-    with open('charts_app/server/music_data/billboard.csv', 'w') as f:
+    with open('./music_data/billboard.csv', 'w') as f:
         df.to_csv(f, header=True, index=False)
 
 

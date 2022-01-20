@@ -1,10 +1,10 @@
 import pymysql
-from charts_app.server.lib.scrape_billboard import billboard_to_csv
-from charts_app.server.lib.scrape_spotify import spotify_to_csv
+from scrape_billboard import billboard_to_csv
+from scrape_spotify import spotify_to_csv
 import csv
 import re
 from fuzzywuzzy import process
-from charts_app.server.lib.python_sql_dbconfig import read_db_config
+from python_sql_dbconfig import read_db_config
 
 
 class ChartsConnection:
@@ -19,10 +19,10 @@ class ChartsConnection:
         """ Connect to MySQL database """
         if self.is_test:
             db_config = read_db_config(
-                'charts_app/server/tests/testchartsconfig.ini')
+                './tests/testchartsconfig.ini')
         else:
             db_config = read_db_config(
-                'charts_app/server/lib/chartsconfig.ini')
+                './lib/chartsconfig.ini')
         try:
             print('Connecting to MySQL database...')
             self.cnx = pymysql.Connection(**db_config)
@@ -203,7 +203,7 @@ class ChartsConnection:
         if not self.is_test:
             spotify_to_csv()
             cur = self.cnx.cursor()
-            with open('charts_app/server/music_data/spotify.csv', mode='r') as csv_file:
+            with open('./music_data/spotify.csv', mode='r') as csv_file:
                 csv_reader = csv.DictReader(csv_file)
                 line_count = 0
                 for row in csv_reader:
@@ -220,7 +220,7 @@ class ChartsConnection:
         if not self.is_test:
             billboard_to_csv()
             cur = self.cnx.cursor()
-            with open('charts_app/server/music_data/billboard.csv', mode='r') as csv_file:
+            with open('./music_data/billboard.csv', mode='r') as csv_file:
                 csv_reader = csv.DictReader(csv_file)
                 line_count = 0
                 for row in csv_reader:

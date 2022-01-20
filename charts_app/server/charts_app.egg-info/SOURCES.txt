@@ -1,0 +1,15 @@
+setup.py
+charts_app.egg-info/PKG-INFO
+charts_app.egg-info/SOURCES.txt
+charts_app.egg-info/dependency_links.txt
+charts_app.egg-info/top_level.txt
+lib/__init__.py
+lib/chart_connection.py
+lib/console_view.py
+lib/python_sql_dbconfig.py
+lib/scrape_billboard.py
+lib/scrape_rollingstone.py
+lib/scrape_spotify.py
+lib/server_api.py
+tests/__init__.py
+tests/test_charts_connection.py

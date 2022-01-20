@@ -1,7 +1,7 @@
 from flask import render_template, Flask
 from flask_bootstrap import Bootstrap
 from chart_connection import *
-from pandas import DataFrame
+import pandas as pd
 
 app = Flask(__name__, template_folder="../static/public")
 Bootstrap(app)
@@ -11,9 +11,11 @@ charts = ChartsConnection()
 @app.route("/")
 def index():
     data = charts.return_all_chart_entries()
-    data = charts.table_from_curweek()
-    df = DataFrame(data, columns=['Chart Name', 'Chart Week', 'Title', 'Artist', 'Song ID', 'Position', 'Streams',
+    # data = charts.table_from_curweek()
+    df = pd.DataFrame(data, columns=['Chart Name', 'Chart Week', 'Title', 'Artist', 'Song ID', 'Position', 'Streams',
                                   'Weeks on Chart', 'Peak Position', 'Last Position'])
+    df["Chart Week"] = pd.to_datetime(df["Chart Week"], format="%Y/%m/%d")
+    df["Chart Week"] = df["Chart Week"].dt.strftime('%Y-%m-%d')
     return df.to_json(orient='records')
 
 
@@ -21,7 +23,7 @@ def index():
 def show_tables():
     data = charts.return_all_chart_entries()
     data = charts.table_from_curweek()
-    df = DataFrame(data, columns=['Chart Name', 'Chart Week', 'Title', 'Artist', 'Song ID', 'Position', 'Streams',
+    df = pd.DataFrame(data, columns=['Chart Name', 'Chart Week', 'Title', 'Artist', 'Song ID', 'Position', 'Streams',
                                   'Weeks on Chart', 'Peak Position', 'Last Position'])
     df.set_index('Position', inplace=True)
     spotify = df.loc[df['Chart Name'] == 'Spotify'].sort_index(inplace=False)
@@ -37,7 +39,7 @@ def show_tables():
 @app.route('/common')
 def show_common_songs():
     data = charts.common_songs_in('Spotify', 'Billboard')
-    df = DataFrame(data, columns=['Chart Name', 'Chart Week', 'Title', 'Artist', 'Song ID', 'Position', 'Streams',
+    df = pd.DataFrame(data, columns=['Chart Name', 'Chart Week', 'Title', 'Artist', 'Song ID', 'Position', 'Streams',
                                   'Weeks on Chart', 'Peak Position', 'Last Position'])
     df.set_index('Position', inplace=True)
     return render_template('view2.html', tables=[df.to_html()])
