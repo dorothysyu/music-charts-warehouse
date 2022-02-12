@@ -264,3 +264,6 @@ class ChartsConnection:
             cur_chart_entries.append(row)
         cur.close()
         return cur_chart_entries
+
+if __name__ == "__main__":
+    connection = ChartsConnection()

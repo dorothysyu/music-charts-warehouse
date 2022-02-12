@@ -1,4 +1,4 @@
-from charts_app.server.lib.chart_connection import ChartsConnection
+from chart_connection import ChartsConnection
 
 if __name__ == "__main__":
     charts = ChartsConnection()
