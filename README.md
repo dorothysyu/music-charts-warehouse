@@ -2,8 +2,6 @@
 
 Music Charts Warehouse is a simple web app designed to compile music chart data from different sources. As of now, it is taking data from [Spotify's Weekly US Chart](https://spotifycharts.com/regional/us/weekly/latest) and [Billboard's Hot 100](https://www.billboard.com/charts/hot-100/).
 
----
-
 ## Prerequisites
 
 Make sure you have installed all of the following prerequisites on your machine:
@@ -15,8 +13,6 @@ Make sure you have installed all of the following prerequisites on your machine:
      Start the Workbench and verify connection to local server by selecting Local instance and typing `show databases;` in the query. Execute the command (the lightning bolt) You should see `information_schema`, `mysql`, `performance_schema`, and `sys`.
 
 ## Installation
-
----
 
 ### Setting up the back end and the database
 
@@ -38,9 +34,9 @@ Then, still in the `server` directory, install the necessary Python packages fro
 pip install -r requirements.txt
 ```
 
-There should now be the necessary packages installed in your library (`[your venv directory]/Lib/site-packages` directory, if you decided to use a venv.)
+There should now be the necessary packages installed in your library (If you decided to use a venv, this would be your`[your venv directory]/Lib/site-packages` directory)
 
-Then, create a file named `chartsconfig.ini` in the `server/lib` directory. In it, you wil type:
+Then, create a file named `chartsconfig.ini` in the `server/lib` directory. In it, you will type:
 
 ```ini
 [mysql]
@@ -50,9 +46,9 @@ user = [username]
 password =[password]
 ```
 
-> Note: The default user is `root.` The password is your MySQL password you set up earlier.  is Make sure there is no extraneous whitespace before typing in your password.
+> Note: The default user is `root.` The password is your MySQL password you set up earlier. Make sure there is no extraneous whitespace before typing in your password.
 
-To set up the database, open MySQL Workbench. Select and open the local instance. Go to File -> Open SQL Script -> [path to music-charts-warehouse]\charts_app\server\lib -> Select `musicschema`. Execute the file (this is the yellow lightning bolt in the toolbar above the editor). After running it, it should look something like this:
+To set up the database, open MySQL Workbench. Select and open the local instance. Go to File -> Open SQL Script -> `[path to music-charts-warehouse]\charts_app\server\lib` -> Select `musicschema`. Execute the file (this is the yellow lightning bolt in the toolbar above the editor). After running it, it should look something like this:
 
 ![ ](sqlsetup.png "Site demo")
 
@@ -72,7 +68,7 @@ to see what is in the database.
 
 ### Setting up the front end
 
-To set up the front-end, navigate to `charts_app/client`.  
+To set up the front end, navigate to `charts_app/client`.  
 Run the command
 
 ```javascript
@@ -114,3 +110,9 @@ This should open your default browser to localhost:3000, where you will see and 
 * React.js
 * HTML
 * CSS
+
+## Acknowledgements
+
+* [Traversey Media](https://youtu.be/w7ejDZ8SWv8), for teaching me React!
+* My database professor/class from Northeastern University
+* [This guide, for teaching how to scrape data from websites](https://jennifer-franklin.medium.com/how-to-scrape-the-most-popular-songs-on-spotify-using-python-8a8979fa6b06)
