@@ -94,8 +94,8 @@ This should open your default browser to localhost:3000, where you will see and 
 * [x] Scrape Spotify
 * [x] Scrape Billboard
 * [x] Add column sorting
-* [ ] Standardize week date range for different charts
-  * [ ] Do this by creating a new week field
+* [x] Standardize week date range for different charts
+  * [x] Do this by creating a new week field
   * [ ] Test that same songs from different weeks are the same song in `is_same_song`
 * [ ] Add filtering
   * [ ] Add chart week drop down menu
