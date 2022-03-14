@@ -34,8 +34,8 @@ DROP PROCEDURE IF EXISTS search_by_artist;
 CREATE TABLE IF NOT EXISTS songs
 (
   song_id		INT 			PRIMARY KEY AUTO_INCREMENT,
-  title 		VARCHAR(100)    NOT NULL,
-  artist		VARCHAR(100)    NOT NULL  
+  title 		VARCHAR(255)    NOT NULL,
+  artist		VARCHAR(255)    NOT NULL  
 );
 
 # DESIGN DECISION: https://stackoverflow.com/questions/20864054/implement-specialization-in-er-diagram
@@ -57,7 +57,8 @@ CREATE TABLE chartentries
   chart_entry_id	INT			PRIMARY KEY AUTO_INCREMENT,
   chart_name		VARCHAR(50) NOT NULL,
   position			INT			NOT NULL,
-  chart_week		DATE		NOT NULL,					
+  chart_week		DATE		NOT NULL,
+  standard_week     DATE		NOT NULL,
   song_id			INT			NOT NULL,
   streams			INT,
   weeks_on_chart	INT,
@@ -145,21 +146,25 @@ CREATE PROCEDURE create_chart_entries (
 )
 	BEGIN 
 		DECLARE song_id_val INT;
+        DECLARE standard_week_val DATE;
         
  		CALL create_song_entry(title_param, artist_param);
         SET song_id_val =  return_song_id(title_param, artist_param);
+        #https://dev.mysql.com/doc/refman/5.7/en/date-and-time-functions.html#function_week
+        #https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_date-format
+        SET standard_week_val = str_to_date(concat(yearweek('2022-02-19'), ' Monday'), '%X%V %W');
         
 		IF NOT EXISTS (SELECT * FROM chartentries WHERE chart_name = chart_name_param AND song_id=song_id_val AND chart_week=chart_week_param AND position=position_param) 
-			THEN INSERT IGNORE INTO chartentries(chart_name, chart_week, song_id, position, streams, weeks_on_chart, peak_pos, last_pos) 
-            VALUES (chart_name_param, chart_week_param, song_id_val, position_param, streams_param, weeks_on_chart_param, peak_pos_param, last_pos_param);
+			THEN INSERT IGNORE INTO chartentries(chart_name, chart_week, standard_week, song_id, position, streams, weeks_on_chart, peak_pos, last_pos) 
+            VALUES (chart_name_param, chart_week_param, standard_week_val, song_id_val, position_param, streams_param, weeks_on_chart_param, peak_pos_param, last_pos_param);
             END IF;
 	END //
-    
+
 CREATE PROCEDURE view_all_chart_entries(
 )
 DETERMINISTIC READS SQL DATA
 	BEGIN 
-		SELECT chartentries.chart_name, chartentries.chart_week, songs.title, songs.artist, songs.song_id, chartentries.position, chartentries.streams, chartentries.weeks_on_chart, chartentries.peak_pos, chartentries.last_pos
+		SELECT chartentries.chart_name, chartentries.standard_week, songs.title, songs.artist, songs.song_id, chartentries.position, chartentries.streams, chartentries.weeks_on_chart, chartentries.peak_pos, chartentries.last_pos
         FROM chartentries JOIN songs ON chartentries.song_id = songs.song_id;
 	END //
     
@@ -213,3 +218,18 @@ CREATE PROCEDURE same_songs_billboard(
 		FROM chartentries JOIN songs ON chartentries.song_id = songs.song_id
         GROUP BY songs.song_id HAVING COUNT(*) = 1 AND chartentries.chart_name = 'Billboard';
     END //
+    
+    
+    /*
+    	SELECT sp.chart_name, bb.chart_name, sp.chart_week, sp.position, bb.position, sp.streams, bb.weeks_on_chart, bb.peak_pos, bb.last_pos FROM 
+		(SELECT * FROM chartentries WHERE chart_name = 'Spotify') as sp
+	left  JOIN 
+		(SELECT * FROM chartentries WHERE chart_name = 'Billboard') as bb
+	ON sp.song_id = bb.song_id
+	UNION
+	SELECT sp.chart_name, bb.chart_name, sp.chart_week, sp.position, bb.position, sp.streams, bb.weeks_on_chart, bb.peak_pos, bb.last_pos FROM 
+		(SELECT * FROM chartentries WHERE chart_name = 'Spotify') as sp
+	RIGHT  JOIN 
+		(SELECT * FROM chartentries WHERE chart_name = 'Billboard') as bb
+	ON sp.song_id = bb.song_id)
+    */
